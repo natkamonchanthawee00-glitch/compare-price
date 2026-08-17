@@ -7,6 +7,7 @@
 <title>Compare Smart</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -14,19 +15,19 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f1f5f9;
-    color: #1e293b;
+    background: #f3f4f6;
+    color: #222;
 }
 
 header {
     background: linear-gradient(135deg, #2563eb, #7c3aed);
     color: white;
     text-align: center;
-    padding: 35px 15px;
+    padding: 30px 15px;
 }
 
 header h1 {
-    margin: 0 0 10px;
+    margin: 0 0 8px;
 }
 
 .container {
@@ -37,28 +38,28 @@ header h1 {
 
 .card {
     background: white;
-    border-radius: 16px;
     padding: 20px;
+    border-radius: 15px;
     margin-bottom: 20px;
-    box-shadow: 0 5px 18px rgba(0,0,0,.08);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
 .product {
-    border: 2px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 18px;
     background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 20px;
 }
 
-.product-top {
+.product-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.product-top h3 {
+.product-head h3 {
     margin: 0;
     color: #2563eb;
 }
@@ -72,7 +73,6 @@ header h1 {
 label {
     display: block;
     font-weight: bold;
-    font-size: 14px;
     margin-bottom: 5px;
 }
 
@@ -80,18 +80,17 @@ input,
 select {
     width: 100%;
     padding: 11px;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 15px;
-    background: white;
 }
 
 button {
     border: 0;
-    border-radius: 9px;
-    padding: 11px 16px;
-    font-weight: bold;
+    border-radius: 8px;
+    padding: 11px 15px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .add-product {
@@ -99,31 +98,43 @@ button {
     color: white;
 }
 
-.remove-product {
+.delete-product {
     background: #ef4444;
     color: white;
 }
 
-.compare-button {
+.add-spec {
+    background: #7c3aed;
+    color: white;
+    margin-top: 12px;
+}
+
+.delete-spec {
+    background: #ef4444;
+    color: white;
+}
+
+.compare {
+    display: block;
     width: 100%;
     margin-top: 15px;
+    padding: 15px;
     background: #2563eb;
     color: white;
     font-size: 18px;
-    padding: 15px;
 }
 
-.spec-area {
+.spec-box {
     margin-top: 20px;
-    border-top: 1px solid #ddd;
     padding-top: 15px;
+    border-top: 1px solid #ddd;
 }
 
 .spec {
     background: white;
     border: 1px solid #ddd;
+    border-radius: 8px;
     padding: 12px;
-    border-radius: 10px;
     margin-top: 10px;
 }
 
@@ -134,18 +145,6 @@ button {
     align-items: end;
 }
 
-.add-spec {
-    background: #7c3aed;
-    color: white;
-    margin-top: 10px;
-}
-
-.remove-spec {
-    background: #ef4444;
-    color: white;
-    padding: 9px;
-}
-
 .results {
     display: none;
 }
@@ -153,20 +152,20 @@ button {
 .winner {
     background: #dcfce7;
     border: 2px solid #22c55e;
+    padding: 20px;
     border-radius: 12px;
     text-align: center;
-    padding: 20px;
-    margin-bottom: 20px;
 }
 
-.result-grid {
+.result-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 15px;
+    margin-top: 20px;
 }
 
 .result {
-    border: 2px solid #e2e8f0;
+    border: 2px solid #ddd;
     border-radius: 12px;
     padding: 15px;
 }
@@ -179,37 +178,42 @@ button {
     width: 100%;
     height: 160px;
     object-fit: contain;
-    background: #f1f5f9;
+    background: #f3f4f6;
     border-radius: 8px;
 }
 
 .score {
-    font-size: 25px;
-    font-weight: bold;
     color: #16a34a;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .price {
     color: #2563eb;
-    font-weight: bold;
     font-size: 20px;
+    font-weight: bold;
 }
 
-.view {
+.link-button {
     display: block;
+    text-align: center;
     background: #111827;
     color: white;
     text-decoration: none;
-    text-align: center;
     padding: 10px;
     border-radius: 8px;
     margin-top: 10px;
 }
 
+.table-wrap {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    min-width: 600px;
 }
 
 th,
@@ -223,12 +227,7 @@ th {
     background: #eef2ff;
 }
 
-.best-cell {
-    background: #dcfce7;
-    font-weight: bold;
-}
-
-@media(max-width:700px) {
+@media (max-width: 700px) {
 
     .grid {
         grid-template-columns: 1fr;
@@ -239,8 +238,10 @@ th {
     }
 
 }
+
 </style>
 </head>
+
 
 <body>
 
@@ -257,29 +258,34 @@ th {
 
 <div class="container">
 
+
 <div class="card">
 
-<h2>📦 สินค้า</h2>
+<h2>📦 รายการสินค้า</h2>
 
 <p>
-เพิ่มสินค้าได้หลายรายการ และกำหนดสเปกเองได้
+เพิ่มสินค้า กำหนดสเปก และเปรียบเทียบความคุ้มค่า
 </p>
 
 <div id="productList"></div>
 
+
 <button
+type="button"
 class="add-product"
-onclick="addProduct()">
+id="addProductButton">
 
 ➕ เพิ่มสินค้า
 
 </button>
 
-<button
-class="compare-button"
-onclick="compareProducts()">
 
-🔍 เปรียบเทียบสินค้า
+<button
+type="button"
+class="compare"
+id="compareButton">
+
+🔍 เปรียบเทียบความคุ้มค่า
 
 </button>
 
@@ -295,69 +301,95 @@ class="winner"
 id="winner">
 </div>
 
-<h2>
-📊 ผลการเปรียบเทียบ
-</h2>
+
+<h2>📊 ผลการเปรียบเทียบ</h2>
 
 <div
-class="result-grid"
-id="resultGrid">
+class="result-list"
+id="resultList">
 </div>
 
-<h2>
-⚙️ ตารางเปรียบเทียบสเปก
-</h2>
 
-<div style="overflow-x:auto">
+<h2>⚙️ ตารางเปรียบเทียบสเปก</h2>
 
-<table id="comparisonTable"></table>
+<div class="table-wrap">
+
+<table id="comparisonTable">
+
+</table>
 
 </div>
 
 </div>
+
 
 </div>
 
 
 <script>
 
-/* ==========================
+/* =================================
    ตัวแปร
-========================== */
+================================= */
 
-var productNumber = 0;
+let productNumber = 0;
 
 
-/* ==========================
+/* =================================
+   ปุ่มเพิ่มสินค้า
+================================= */
+
+document
+.getElementById("addProductButton")
+.addEventListener("click", function() {
+
+    addProduct();
+
+});
+
+
+/* =================================
+   ปุ่มเปรียบเทียบ
+================================= */
+
+document
+.getElementById("compareButton")
+.addEventListener("click", function() {
+
+    compareProducts();
+
+});
+
+
+/* =================================
    เพิ่มสินค้า
-========================== */
+================================= */
 
 function addProduct() {
 
     productNumber++;
 
-    var id = productNumber;
+    const id = productNumber;
 
-    var product =
+    const product =
         document.createElement("div");
 
     product.className = "product";
 
-    product.id =
-        "product-" + id;
+    product.dataset.id = id;
 
 
     product.innerHTML = `
 
-        <div class="product-top">
+        <div class="product-head">
 
             <h3>
                 📦 สินค้า ${id}
             </h3>
 
             <button
-                class="remove-product"
-                onclick="removeProduct(${id})">
+                type="button"
+                class="delete-product">
 
                 🗑 ลบ
 
@@ -374,8 +406,7 @@ function addProduct() {
                     ประเภทสินค้า
                 </label>
 
-                <select
-                    id="category-${id}">
+                <select class="category">
 
                     <option>
                         ของใช้ทั่วไป
@@ -417,7 +448,7 @@ function addProduct() {
                 </label>
 
                 <input
-                    id="name-${id}"
+                    class="product-name"
                     placeholder="เช่น Laptop ASUS">
 
             </div>
@@ -430,8 +461,9 @@ function addProduct() {
                 </label>
 
                 <input
-                    id="price-${id}"
+                    class="product-price"
                     type="number"
+                    min="0"
                     placeholder="เช่น 19900">
 
             </div>
@@ -444,8 +476,10 @@ function addProduct() {
                 </label>
 
                 <input
-                    id="quantity-${id}"
+                    class="product-quantity"
                     type="number"
+                    min="0"
+                    step="0.01"
                     placeholder="เช่น 1">
 
             </div>
@@ -458,7 +492,7 @@ function addProduct() {
                 </label>
 
                 <input
-                    id="unit-${id}"
+                    class="product-unit"
                     placeholder="เครื่อง / ชิ้น / ml">
 
             </div>
@@ -471,7 +505,8 @@ function addProduct() {
                 </label>
 
                 <input
-                    id="link-${id}"
+                    class="product-link"
+                    type="url"
                     placeholder="https://...">
 
             </div>
@@ -484,7 +519,8 @@ function addProduct() {
                 </label>
 
                 <input
-                    id="image-${id}"
+                    class="product-image"
+                    type="url"
                     placeholder="https://...jpg">
 
             </div>
@@ -492,19 +528,21 @@ function addProduct() {
         </div>
 
 
-        <div class="spec-area">
+        <div class="spec-box">
 
-            <b>
-                ⚙️ สเปกสินค้า
-            </b>
+            <h4>
+                ⚙️ กำหนดสเปก
+            </h4>
 
-            <div
-                id="specList-${id}">
+
+            <div class="spec-list">
+
             </div>
 
+
             <button
-                class="add-spec"
-                onclick="addSpec(${id})">
+                type="button"
+                class="add-spec">
 
                 ➕ เพิ่มสเปก
 
@@ -516,54 +554,53 @@ function addProduct() {
 
 
     document
-        .getElementById("productList")
-        .appendChild(product);
+    .getElementById("productList")
+    .appendChild(product);
 
 
-    /* สร้างสเปกเริ่มต้น 2 ช่อง */
+    /* ปุ่มลบสินค้า */
 
-    addSpec(id);
-
-    addSpec(id);
-
-}
-
-
-/* ==========================
-   ลบสินค้า
-========================== */
-
-function removeProduct(id) {
-
-    var product =
-        document.getElementById(
-            "product-" + id
-        );
-
-    if(product) {
+    product
+    .querySelector(".delete-product")
+    .addEventListener("click", function() {
 
         product.remove();
 
-    }
+    });
+
+
+    /* ปุ่มเพิ่มสเปก */
+
+    product
+    .querySelector(".add-spec")
+    .addEventListener("click", function() {
+
+        addSpec(product);
+
+    });
+
+
+    /* เพิ่มสเปกเริ่มต้น 2 ช่อง */
+
+    addSpec(product);
+
+    addSpec(product);
 
 }
 
 
-/* ==========================
+/* =================================
    เพิ่มสเปก
-========================== */
+================================= */
 
-function addSpec(productId) {
+function addSpec(product) {
 
-    var list =
-        document.getElementById(
-            "specList-" + productId
-        );
+    const list =
+        product.querySelector(".spec-list");
 
 
-    var spec =
+    const spec =
         document.createElement("div");
-
 
     spec.className = "spec";
 
@@ -614,41 +651,13 @@ function addSpec(productId) {
             <div>
 
                 <label>
-                    แบบการให้คะแนน
+                    การให้คะแนน
                 </label>
 
-                <select
-                    class="spec-type">
+                <select class="spec-type">
 
                     <option value="high">
                         มาก = ดี
                     </option>
 
                     <option value="low">
-                        น้อย = ดี
-                    </option>
-
-                    <option value="text">
-                        ข้อความ
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div>
-
-                <button
-                    class="remove-spec"
-                    onclick="
-                    this.parentElement
-                    .parentElement
-                    .parentElement
-                    .remove()">
-
-                    🗑
-
-                </button>
-
-            </d
