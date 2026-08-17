@@ -3,401 +3,592 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Compare Price</title>
+
+<title>Compare Smart - เปรียบเทียบสินค้าอัจฉริยะ</title>
 
 <style>
+
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f3f4f6;
-  color: #222;
+    margin: 0;
+    font-family: Arial, "Noto Sans Thai", sans-serif;
+    background: #f3f6fb;
+    color: #1f2937;
 }
 
 header {
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  color: white;
-  text-align: center;
-  padding: 35px 15px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+    text-align: center;
+    padding: 35px 15px;
 }
 
 header h1 {
-  margin: 0 0 10px;
+    margin: 0 0 8px;
+    font-size: 34px;
+}
+
+header p {
+    margin: 0;
+    font-size: 16px;
 }
 
 .container {
-  max-width: 1000px;
-  margin: 25px auto;
-  padding: 15px;
+    max-width: 1150px;
+    margin: auto;
+    padding: 20px;
 }
 
 .card {
-  background: white;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+}
+
+.info {
+    background: #eff6ff;
+    border-left: 5px solid #2563eb;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+h2 {
+    margin-top: 0;
 }
 
 .product {
-  border: 1px solid #ddd;
-  padding: 18px;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  background: #fafafa;
+    border: 2px solid #e5e7eb;
+    border-radius: 15px;
+    padding: 18px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.product-header h3 {
+    margin: 0;
+    color: #2563eb;
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 13px;
+}
+
+.field {
+    margin-bottom: 5px;
 }
 
 label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 14px;
 }
 
-input {
-  width: 100%;
-  padding: 11px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+input,
+select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    font-size: 15px;
+    background: white;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #2563eb;
 }
 
 button {
-  border: none;
-  padding: 12px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
+    border: none;
+    border-radius: 9px;
+    padding: 11px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
 }
 
-.add {
-  background: #16a34a;
-  color: white;
+.add-product {
+    background: #16a34a;
+    color: white;
+}
+
+.delete-product {
+    background: #ef4444;
+    color: white;
+}
+
+.add-spec {
+    background: #7c3aed;
+    color: white;
+    margin-top: 12px;
+}
+
+.delete-spec {
+    background: #ef4444;
+    color: white;
+    padding: 8px 10px;
 }
 
 .compare {
-  width: 100%;
-  margin-top: 15px;
-  background: #2563eb;
-  color: white;
-  font-size: 17px;
+    width: 100%;
+    background: #2563eb;
+    color: white;
+    font-size: 18px;
+    padding: 15px;
+    margin-top: 10px;
 }
 
-.delete {
-  background: #ef4444;
-  color: white;
-  float: right;
+.spec-section {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.spec-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.spec {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.spec-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr .7fr auto;
+    gap: 8px;
+    align-items: end;
 }
 
 .results {
-  display: none;
+    display: none;
 }
 
 .winner {
-  background: #dcfce7;
-  border: 2px solid #22c55e;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-  margin-bottom: 20px;
+    background: #dcfce7;
+    border: 2px solid #22c55e;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.winner h2 {
+    color: #15803d;
 }
 
 .result-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
 }
 
-.result-item {
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 12px;
+.result-card {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 15px;
+    padding: 16px;
 }
 
-.result-item img {
-  width: 100%;
-  height: 160px;
-  object-fit: contain;
-  background: #f3f4f6;
-  border-radius: 8px;
+.result-card.best {
+    border-color: #22c55e;
 }
 
-.price {
-  font-size: 22px;
-  color: #2563eb;
-  font-weight: bold;
+.result-card img {
+    width: 100%;
+    height: 170px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: #f3f4f6;
+    margin-bottom: 10px;
 }
 
-.best {
-  border: 3px solid #22c55e;
+.rank {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-a {
-  display: block;
-  text-align: center;
-  background: #111827;
-  color: white;
-  text-decoration: none;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 8px;
+.score {
+    font-size: 27px;
+    font-weight: bold;
+    color: #16a34a;
+    margin: 10px 0;
 }
 
-@media(max-width:700px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+.unit-price {
+    color: #2563eb;
+    font-weight: bold;
+    font-size: 18px;
 }
+
+.view-link {
+    display: block;
+    text-align: center;
+    background: #111827;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 12px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+.compare-table th,
+.compare-table td {
+    border: 1px solid #ddd;
+    padding: 11px;
+    text-align: center;
+}
+
+.compare-table th {
+    background: #eef2ff;
+}
+
+.best-cell {
+    background: #dcfce7;
+    font-weight: bold;
+}
+
+.formula {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 15px;
+    line-height: 1.8;
+    margin-top: 20px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: #e0e7ff;
+    color: #3730a3;
+    font-size: 12px;
+}
+
+@media (max-width: 750px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .spec-grid {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 27px;
+    }
+
+    .container {
+        padding: 12px;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>🛒 Compare Price</h1>
-  <p>เว็บไซต์คำนวณและเปรียบเทียบความคุ้มค่าสินค้า</p>
+
+    <h1>🛒 Compare Smart</h1>
+
+    <p>
+        ระบบคำนวณและเปรียบเทียบความคุ้มค่าสินค้าอัจฉริยะ
+    </p>
+
 </header>
+
 
 <div class="container">
 
-  <div class="card">
-    <h2>📦 เพิ่มสินค้า</h2>
+    <div class="card">
 
-    <div id="products"></div>
+        <div class="info">
 
-    <button class="add" onclick="addProduct()">
-      ➕ เพิ่มสินค้า
-    </button>
+            💡 <b>วิธีใช้</b><br>
 
-    <button class="compare" onclick="compareProducts()">
-      🔍 เปรียบเทียบความคุ้มค่า
-    </button>
-  </div>
+            1. เลือกประเภทสินค้า<br>
+            2. ใส่ข้อมูลสินค้าและราคา<br>
+            3. กด <b>เพิ่มสเปก</b> เพื่อกำหนดสเปกที่ต้องการเปรียบเทียบ<br>
+            4. เลือกว่าแต่ละสเปกยิ่งมากหรือยิ่งน้อยยิ่งดี<br>
+            5. กด <b>เปรียบเทียบสินค้า</b>
 
-  <div class="card results" id="results">
+        </div>
 
-    <div class="winner" id="winner"></div>
 
-    <h2>📊 ผลการเปรียบเทียบ</h2>
+        <h2>📦 สินค้าที่ต้องการเปรียบเทียบ</h2>
 
-    <div class="result-grid" id="resultGrid"></div>
+        <div id="products"></div>
 
-  </div>
+
+        <button
+            class="add-product"
+            onclick="addProduct()">
+
+            ➕ เพิ่มสินค้า
+
+        </button>
+
+
+        <button
+            class="compare"
+            onclick="compareProducts()">
+
+            🔍 เปรียบเทียบสินค้า
+
+        </button>
+
+    </div>
+
+
+    <div
+        class="card results"
+        id="results">
+
+        <div
+            class="winner"
+            id="winner">
+        </div>
+
+
+        <h2>🏆 ผลการจัดอันดับ</h2>
+
+        <div
+            class="result-grid"
+            id="resultGrid">
+        </div>
+
+
+        <h2 style="margin-top:30px;">
+            📊 ตารางเปรียบเทียบสเปก
+        </h2>
+
+        <div class="table-wrapper">
+
+            <table
+                class="compare-table"
+                id="compareTable">
+            </table>
+
+        </div>
+
+
+        <div class="formula">
+
+            <b>📌 วิธีคิดคะแนน</b><br>
+
+            • ราคาถูกกว่า → ได้คะแนนความคุ้มค่าด้านราคาสูงกว่า<br>
+
+            • สเปกที่เลือก “ยิ่งมากยิ่งดี” → ค่ามากกว่าจะได้คะแนนสูงกว่า<br>
+
+            • สเปกที่เลือก “ยิ่งน้อยยิ่งดี” → ค่าน้อยกว่าจะได้คะแนนสูงกว่า<br>
+
+            • สามารถกำหนด <b>น้ำหนัก</b> ของแต่ละสเปกได้<br>
+
+            • สเปกที่เป็นข้อความจะแสดงในตาราง แต่ไม่นำไปคำนวณคะแนนตัวเลข
+
+        </div>
+
+    </div>
 
 </div>
 
+
 <script>
 
-let count = 0;
+let productCount = 0;
+
+
+/* =====================================
+   เพิ่มสินค้า
+===================================== */
 
 function addProduct() {
 
-  count++;
+    productCount++;
 
-  const box = document.createElement("div");
+    const id = productCount;
 
-  box.className = "product";
+    const product = document.createElement("div");
 
-  box.id = "product" + count;
+    product.className = "product";
 
-  box.innerHTML = `
-
-    <button class="delete"
-      onclick="document.getElementById('product${count}').remove()">
-      ลบ
-    </button>
-
-    <h3>สินค้า ${count}</h3>
-
-    <div class="grid">
-
-      <div>
-        <label>ชื่อสินค้า</label>
-        <input id="name${count}"
-        placeholder="เช่น น้ำดื่ม">
-      </div>
-
-      <div>
-        <label>ราคา (บาท)</label>
-        <input id="price${count}"
-        type="number"
-        placeholder="เช่น 120">
-      </div>
-
-      <div>
-        <label>จำนวน</label>
-        <input id="quantity${count}"
-        type="number"
-        placeholder="เช่น 12">
-      </div>
-
-      <div>
-        <label>หน่วย</label>
-        <input id="unit${count}"
-        placeholder="เช่น ขวด / ชิ้น">
-      </div>
-
-      <div>
-        <label>ลิงก์สินค้า</label>
-        <input id="link${count}"
-        placeholder="https://...">
-      </div>
-
-      <div>
-        <label>ลิงก์รูปภาพ</label>
-        <input id="image${count}"
-        placeholder="https://...jpg">
-      </div>
-
-    </div>
-  `;
-
-  document.getElementById("products").appendChild(box);
-}
+    product.id = "product-" + id;
 
 
-function compareProducts() {
+    product.innerHTML = `
 
-  const products = [];
+        <div class="product-header">
 
-  document.querySelectorAll(".product").forEach(box => {
+            <h3>
+                📦 สินค้า ${id}
+            </h3>
 
-    const id = box.id.replace("product","");
+            <button
+                class="delete-product"
+                onclick="removeProduct(${id})">
 
-    const name =
-      document.getElementById("name" + id).value;
+                🗑 ลบสินค้า
 
-    const price =
-      Number(document.getElementById("price" + id).value);
+            </button>
 
-    const quantity =
-      Number(document.getElementById("quantity" + id).value);
-
-    const unit =
-      document.getElementById("unit" + id).value || "หน่วย";
-
-    const link =
-      document.getElementById("link" + id).value;
-
-    const image =
-      document.getElementById("image" + id).value;
-
-    if(name && price > 0 && quantity > 0) {
-
-      products.push({
-        name,
-        price,
-        quantity,
-        unit,
-        link,
-        image,
-        unitPrice: price / quantity
-      });
-
-    }
-
-  });
-
-  if(products.length < 2) {
-    alert("กรุณาใส่ข้อมูลสินค้าอย่างน้อย 2 รายการ");
-    return;
-  }
-
-  products.sort((a,b) =>
-    a.unitPrice - b.unitPrice
-  );
-
-  const best = products[0];
-
-  document.getElementById("results").style.display = "block";
-
-  document.getElementById("winner").innerHTML = `
-    <h2>🏆 สินค้าที่คุ้มที่สุด</h2>
-    <h2>${best.name}</h2>
-    <p>
-      ราคาเฉลี่ยต่อ ${best.unit}
-      <b>${best.unitPrice.toFixed(2)} บาท</b>
-    </p>
-  `;
-
-  const grid =
-    document.getElementById("resultGrid");
-
-  grid.innerHTML = "";
-
-  products.forEach((p,index) => {
-
-    let image = "";
-
-    if(p.image) {
-      image = `
-        <img src="${p.image}"
-        onerror="this.style.display='none'">
-      `;
-    }
-
-    let link = "";
-
-    if(p.link) {
-      link = `
-        <a href="${p.link}"
-        target="_blank">
-        🔗 ดูสินค้า
-        </a>
-      `;
-    }
-
-    grid.innerHTML += `
-
-      <div class="result-item
-      ${index === 0 ? "best" : ""}">
-
-        ${image}
-
-        <h3>
-          ${index === 0 ? "🏆 " : ""}
-          ${p.name}
-        </h3>
-
-        <div class="price">
-          ${p.price.toFixed(2)} บาท
         </div>
 
-        <p>
-          จำนวน ${p.quantity} ${p.unit}
-        </p>
 
-        <p>
-          ราคา/${p.unit}:
-          <b>
-            ${p.unitPrice.toFixed(2)} บาท
-          </b>
-        </p>
+        <div class="grid">
 
-        ${link}
+            <div class="field">
 
-      </div>
-    `;
-  });
+                <label>
+                    ประเภทสินค้า
+                </label>
 
-  document.getElementById("results")
-    .scrollIntoView({behavior:"smooth"});
-}
+                <select id="category-${id}">
+
+                    <option value="ทั่วไป">
+                        🛒 ของใช้ทั่วไป
+                    </option>
+
+                    <option value="คอมพิวเตอร์">
+                        💻 คอมพิวเตอร์
+                    </option>
+
+                    <option value="โทรศัพท์">
+                        📱 โทรศัพท์
+                    </option>
+
+                    <option value="แท็บเล็ต">
+                        📱 แท็บเล็ต
+                    </option>
+
+                    <option value="อุปกรณ์ไอที">
+                        🎧 อุปกรณ์ไอที
+                    </option>
+
+                    <option value="เครื่องใช้ไฟฟ้า">
+                        ⚡ เครื่องใช้ไฟฟ้า
+                    </option>
+
+                    <option value="อื่น ๆ">
+                        📦 อื่น ๆ
+                    </option>
+
+                </select>
+
+            </div>
 
 
-/* สร้างสินค้าเริ่มต้น 2 รายการ */
+            <div class="field">
 
-addProduct();
-addProduct();
+                <label>
+                    ชื่อสินค้า
+                </label>
 
-</script>
+                <input
+                    id="name-${id}"
+                    placeholder="เช่น ASUS Vivobook">
 
-</body>
-</html>
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    ราคา (บาท)
+                </label>
+
+                <input
+                    id="price-${id}"
+                    type="number"
+                    min="0"
+                    placeholder="เช่น 19900">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    จำนวน
+                </label>
+
+                <input
+                    id="quantity-${id}"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="เช่น 1">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    หน่วย
+                </label>
+
+                <input
+                    id="unit-${id}"
+                    placeholder="เช่น เครื่อง / ชิ้น / ml">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    ลิงก์สินค้า
+                </label>
+
+                <input
+                    id="link-${id}"
+                    type="url"
+                    placeholder="https://...">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    ลิงก์รูปภาพสินค้า
+                </l
