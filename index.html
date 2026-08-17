@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compare Price</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f4f6;
+  color: #222;
+}
+
+header {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  text-align: center;
+  padding: 35px 15px;
+}
+
+header h1 {
+  margin: 0 0 10px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 25px auto;
+  padding: 15px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,.08);
+}
+
+.product {
+  border: 1px solid #ddd;
+  padding: 18px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  background: #fafafa;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add {
+  background: #16a34a;
+  color: white;
+}
+
+.compare {
+  width: 100%;
+  margin-top: 15px;
+  background: #2563eb;
+  color: white;
+  font-size: 17px;
+}
+
+.delete {
+  background: #ef4444;
+  color: white;
+  float: right;
+}
+
+.results {
+  display: none;
+}
+
+.winner {
+  background: #dcfce7;
+  border: 2px solid #22c55e;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.result-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.result-item img {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+.price {
+  font-size: 22px;
+  color: #2563eb;
+  font-weight: bold;
+}
+
+.best {
+  border: 3px solid #22c55e;
+}
+
+a {
+  display: block;
+  text-align: center;
+  background: #111827;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+@media(max-width:700px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🛒 Compare Price</h1>
+  <p>เว็บไซต์คำนวณและเปรียบเทียบความคุ้มค่าสินค้า</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>📦 เพิ่มสินค้า</h2>
+
+    <div id="products"></div>
+
+    <button class="add" onclick="addProduct()">
+      ➕ เพิ่มสินค้า
+    </button>
+
+    <button class="compare" onclick="compareProducts()">
+      🔍 เปรียบเทียบความคุ้มค่า
+    </button>
+  </div>
+
+  <div class="card results" id="results">
+
+    <div class="winner" id="winner"></div>
+
+    <h2>📊 ผลการเปรียบเทียบ</h2>
+
+    <div class="result-grid" id="resultGrid"></div>
+
+  </div>
+
+</div>
+
+<script>
+
+let count = 0;
+
+function addProduct() {
+
+  count++;
+
+  const box = document.createElement("div");
+
+  box.className = "product";
+
+  box.id = "product" + count;
+
+  box.innerHTML = `
+
+    <button class="delete"
+      onclick="document.getElementById('product${count}').remove()">
+      ลบ
+    </button>
+
+    <h3>สินค้า ${count}</h3>
+
+    <div class="grid">
+
+      <div>
+        <label>ชื่อสินค้า</label>
+        <input id="name${count}"
+        placeholder="เช่น น้ำดื่ม">
+      </div>
+
+      <div>
+        <label>ราคา (บาท)</label>
+        <input id="price${count}"
+        type="number"
+        placeholder="เช่น 120">
+      </div>
+
+      <div>
+        <label>จำนวน</label>
+        <input id="quantity${count}"
+        type="number"
+        placeholder="เช่น 12">
+      </div>
+
+      <div>
+        <label>หน่วย</label>
+        <input id="unit${count}"
+        placeholder="เช่น ขวด / ชิ้น">
+      </div>
+
+      <div>
+        <label>ลิงก์สินค้า</label>
+        <input id="link${count}"
+        placeholder="https://...">
+      </div>
+
+      <div>
+        <label>ลิงก์รูปภาพ</label>
+        <input id="image${count}"
+        placeholder="https://...jpg">
+      </div>
+
+    </div>
+  `;
+
+  document.getElementById("products").appendChild(box);
+}
+
+
+function compareProducts() {
+
+  const products = [];
+
+  document.querySelectorAll(".product").forEach(box => {
+
+    const id = box.id.replace("product","");
+
+    const name =
+      document.getElementById("name" + id).value;
+
+    const price =
+      Number(document.getElementById("price" + id).value);
+
+    const quantity =
+      Number(document.getElementById("quantity" + id).value);
+
+    const unit =
+      document.getElementById("unit" + id).value || "หน่วย";
+
+    const link =
+      document.getElementById("link" + id).value;
+
+    const image =
+      document.getElementById("image" + id).value;
+
+    if(name && price > 0 && quantity > 0) {
+
+      products.push({
+        name,
+        price,
+        quantity,
+        unit,
+        link,
+        image,
+        unitPrice: price / quantity
+      });
+
+    }
+
+  });
+
+  if(products.length < 2) {
+    alert("กรุณาใส่ข้อมูลสินค้าอย่างน้อย 2 รายการ");
+    return;
+  }
+
+  products.sort((a,b) =>
+    a.unitPrice - b.unitPrice
+  );
+
+  const best = products[0];
+
+  document.getElementById("results").style.display = "block";
+
+  document.getElementById("winner").innerHTML = `
+    <h2>🏆 สินค้าที่คุ้มที่สุด</h2>
+    <h2>${best.name}</h2>
+    <p>
+      ราคาเฉลี่ยต่อ ${best.unit}
+      <b>${best.unitPrice.toFixed(2)} บาท</b>
+    </p>
+  `;
+
+  const grid =
+    document.getElementById("resultGrid");
+
+  grid.innerHTML = "";
+
+  products.forEach((p,index) => {
+
+    let image = "";
+
+    if(p.image) {
+      image = `
+        <img src="${p.image}"
+        onerror="this.style.display='none'">
+      `;
+    }
+
+    let link = "";
+
+    if(p.link) {
+      link = `
+        <a href="${p.link}"
+        target="_blank">
+        🔗 ดูสินค้า
+        </a>
+      `;
+    }
+
+    grid.innerHTML += `
+
+      <div class="result-item
+      ${index === 0 ? "best" : ""}">
+
+        ${image}
+
+        <h3>
+          ${index === 0 ? "🏆 " : ""}
+          ${p.name}
+        </h3>
+
+        <div class="price">
+          ${p.price.toFixed(2)} บาท
+        </div>
+
+        <p>
+          จำนวน ${p.quantity} ${p.unit}
+        </p>
+
+        <p>
+          ราคา/${p.unit}:
+          <b>
+            ${p.unitPrice.toFixed(2)} บาท
+          </b>
+        </p>
+
+        ${link}
+
+      </div>
+    `;
+  });
+
+  document.getElementById("results")
+    .scrollIntoView({behavior:"smooth"});
+}
+
+
+/* สร้างสินค้าเริ่มต้น 2 รายการ */
+
+addProduct();
+addProduct();
+
+</script>
+
+</body>
+</html>
